@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.newsletter-form .form-control,
+.newsletter-form .btn {
+    border-radius: 0;
+}
+
+.pagination-shop .page-item.active .page-link {
+    background-color: #000;
+    color: #fff;
+}
+
+.login-form .form-control,
+.login-form .btn {
+    border-radius: 0;
+}
