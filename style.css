@@ -1,18 +1,124 @@
+:root {
+    --accent: #d4a574;
+    --body-text: #99a1af;
+    --body-text-muted: rgba(153, 161, 175, 0.65);
+    --section-y: clamp(3.75rem, 6vw, 6rem);
+    --section-y-tight: clamp(2.25rem, 4vw, 3.25rem);
+    --section-y-lg: clamp(4.5rem, 8vw, 7.5rem);
+}
+
+.section-y {
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
+}
+
+.section-y-tight {
+    padding-top: var(--section-y-tight);
+    padding-bottom: var(--section-y-tight);
+}
+
+.section-y-lg {
+    padding-top: var(--section-y-lg);
+    padding-bottom: var(--section-y-lg);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+.hero-block {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.2)),
+        url("assets/hero-image.png") center / cover no-repeat;
+    min-height: 70vh;
+    padding-bottom: var(--section-y);
+}
+
+.text-accent {
+    color: var(--accent) !important;
+}
+
+.btn-outline-accent {
+    color: var(--accent) !important;
+    border: 1px solid var(--accent);
+    background: transparent;
+}
+
+.btn-outline-accent:hover {
+    background-color: var(--accent);
+    color: #0d0d0d !important;
+    border-color: var(--accent);
+}
+
+.how-step-num {
+    background-color: #1a1a16;
+    width: 5rem;
+    aspect-ratio: 1;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-accent {
+    background-color: var(--accent);
+    color: #0d0d0d !important;
+    border: none !important;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    font-size: 1rem;
+}
+
+.btn-accent:hover {
+    filter: none;
+    color: #000 !important;
+    background-color: #c49a62;
+}
+
+.hero-title {
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.brand-name {
+    font-family: sans-serif;
+    font-weight: 600;
+    font-size: 1.375rem;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    text-transform: none;
+}
+
+.nav-cart-badge {
+    background-color: var(--accent);
+    color: #0d0d0d;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2em 0.45em;
+    line-height: 1;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     line-height: 1.5;
+    background-color: #000;
+    color: var(--body-text);
+    --bs-body-bg: #000;
+    --bs-body-color: var(--body-text);
+}
+
+.text-white {
+    color: var(--body-text) !important;
+}
+
+.text-white-50 {
+    color: var(--body-text-muted) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     text-transform: uppercase;
+    color: inherit;
 }
 
 .newsletter-form .form-control,
@@ -20,12 +126,88 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 0;
 }
 
+.newsletter-form .form-control {
+    background-color: #1a1a1a;
+    border-color: rgba(153, 161, 175, 0.25);
+    color: var(--body-text);
+}
+
+.newsletter-form .form-control::placeholder {
+    color: var(--body-text-muted);
+}
+
+.newsletter-form .form-control:focus {
+    border-color: var(--accent);
+    box-shadow: none;
+    background-color: #1a1a1a;
+    color: var(--body-text);
+}
+
+.site-footer a {
+    color: var(--body-text);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: var(--accent);
+}
+
+.site-footer {
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
+}
+
 .pagination-shop .page-item.active .page-link {
     background-color: #000;
-    color: #fff;
+    color: var(--body-text);
 }
 
 .login-form .form-control,
 .login-form .btn {
     border-radius: 0;
+}
+
+.border-secondary {
+    border-color: rgba(212, 165, 115, 0.2) !important;
+}
+
+.review-stars {
+    max-width: 120px;
+    height: auto;
+    display: block;
+}
+
+.our-story-section .story-img-holder {
+    min-height: 280px;
+    height: 100%;
+}
+
+.our-story-section .story-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 280px;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .our-story-section .row.align-items-stretch {
+        min-height: min(85vh, 640px);
+    }
+
+    .our-story-section .story-img-holder {
+        min-height: min(85vh, 640px);
+    }
+
+    .our-story-section .story-img {
+        min-height: min(85vh, 640px);
+    }
+}
+
+.our-story-text {
+    background-color: #111;
+}
+
+.our-story-section {
+    margin-top: var(--section-y);
 }

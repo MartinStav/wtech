@@ -12,9 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="container">
-        <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="index.html"><img src="assets/logo.png" alt="logo"></a>
+    <header class="sticky-top bg-black">
+        <nav class="container navbar navbar-expand-lg navbar-dark py-3">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="index.html">
+                <img src="assets/logo.png" alt="" width="40" height="40">
+                <span class="brand-name text-accent">Gemini Coffee</span>
+            </a>
             
             <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
                 <span class="navbar-toggler-icon"></span>
@@ -31,13 +34,13 @@
                             <a class="nav-link" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
+                            <a class="nav-link" href="src/shop.html">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cart</a>
+                            <a class="nav-link" href="src/cart.html">Cart</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.html">Login</a>
+                            <a class="nav-link" href="src/login.html">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -45,169 +48,290 @@
         </nav>
     </header>
     <main>
-        <section class="container text-center py-5">
-            <img class="img-fluid mb-4" src="assets/hero.png" alt="hero">
-            <h1 class="display-4 fw-bold mb-3">Premium coffee beans</h1>
-            <p class="lead mb-4">Ethically sourced, expertly roasted, delivered fresh</p>
-            <a href="shop.html" class="btn btn-primary">Shop now</a>
-        </section>
-        <section class="container py-5 text-center">
-            <div class="row g-4">   
-                <div class="col-md-4 p-4">
-                    <p class="display-5 fw-bold mb-2">01</p>
-                    <h2 class="h6 fw-bold mb-2">Free shipping</h2>
-                    <p>On orders over 50 €</p>
-                </div>
-                <div class="col-md-4 p-4">
-                    <p class="display-5 fw-bold mb-2">02</p>
-                    <h2 class="h6 fw-bold mb-2">Fresh roasted</h2>
-                    <p>Roasted weekly in small batches</p>
-                </div>
-                <div class="col-md-4 p-4">
-                    <p class="display-5 fw-bold mb-2">03</p>
-                    <h2 class="h6 fw-bold mb-2">Quality guarantee</h2>
-                    <p>100% satisfaction or money back</p>
+        <section class="hero-block d-flex align-items-center">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-lg-7 col-xl-6 text-start">
+                        <h1 class="display-4 fw-bold mb-3 text-accent text-uppercase hero-title">Premium coffee beans</h1>
+                        <p class="lead mb-4">Ethically sourced, expertly roasted, delivered fresh</p>
+                        <a href="src/shop.html" class="btn btn-accent btn-lg rounded-0 px-4 text-uppercase">Shop now</a>
+                    </div>
                 </div>
             </div>
         </section>
-        <section class="container py-4">
-            <div class="border py-4 px-4">
+        <section class="section-y">
+            <div class="container text-center">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-4 p-4">
+                        <p class="display-5 fw-bold mb-2 text-accent">01</p>
+                        <h2 class="h6 fw-bold mb-2 text-accent">Free shipping</h2>
+                        <p class="text-white-50 mb-0">On orders over 50 €</p>
+                    </div>
+                    <div class="col-md-4 p-4">
+                        <p class="display-5 fw-bold mb-2 text-accent">02</p>
+                        <h2 class="h6 fw-bold mb-2 text-accent">Fresh roasted</h2>
+                        <p class="text-white-50 mb-0">Roasted weekly in small batches</p>
+                    </div>
+                    <div class="col-md-4 p-4">
+                        <p class="display-5 fw-bold mb-2 text-accent">03</p>
+                        <h2 class="h6 fw-bold mb-2 text-accent">Quality guarantee</h2>
+                        <p class="text-white-50 mb-0">100% satisfaction or money back</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-y-tight border-top border-bottom border-secondary">
+            <div class="container">
                 <div class="row text-center">
-                    <div class="col-md-3 my-3">
-                        <p class="h3 fw-bold mb-1">10K+</p>
-                        <p class="text-uppercase small mb-0">Happy customers</p>
+                    <div class="col-md-3 py-3">
+                        <p class="h3 fw-bold mb-1 text-accent">10K+</p>
+                        <p class="text-uppercase small mb-0 text-white-50">Happy customers</p>
                     </div>
-                    <div class="col-md-3 my-3">
-                        <p class="h3 fw-bold mb-1">50+</p>
-                        <p class="text-uppercase small mb-0">Coffee origins</p>
+                    <div class="col-md-3 py-3">
+                        <p class="h3 fw-bold mb-1 text-accent">50+</p>
+                        <p class="text-uppercase small mb-0 text-white-50">Coffee origins</p>
                     </div>
-                    <div class="col-md-3 my-3">
-                        <p class="h3 fw-bold mb-1">100%</p>
-                        <p class="text-uppercase small mb-0">Organic certified</p>
+                    <div class="col-md-3 py-3">
+                        <p class="h3 fw-bold mb-1 text-accent">100%</p>
+                        <p class="text-uppercase small mb-0 text-white-50">Organic certified</p>
                     </div>
-                    <div class="col-md-3 my-3">
-                        <p class="h3 fw-bold mb-1">24/7</p>
-                        <p class="text-uppercase small mb-0">Customer support</p>
+                    <div class="col-md-3 py-3">
+                        <p class="h3 fw-bold mb-1 text-accent">24/7</p>
+                        <p class="text-uppercase small mb-0 text-white-50">Customer support</p>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="container py-5">
-            <div class="row align-items-center g-4">
-                <div class="col-md-6">
-                    <img src="assets/our-story.png" alt="our story" class="img-fluid">
-                </div>
-                <div class="col-md-6">
-                    <h2 class="mb-3">Our story</h2>
-                    <p class="text-secondary mb-4">
-                        We source the finest coffee beans from around the world and roast them to perfection. Our commitment to quality and sustainability drives everything we do.
-                        Each batch is carefully crafted to bring out unique flavor profiles that coffee enthusiasts love.
-                    </p>
-                    <a href="#" class="btn btn-dark">Learn more</a>
-                </div>
-            </div>
-        </section>
-        <section class="container py-5">
-            <h2 class="text-center mb-5">How it works</h2>
-            <div class="row g-4 text-center">
-                <div class="col-md-6 col-lg-3">
-                    <p class="h2 fw-bold mb-2">1</p>
-                    <h3 class="h6 mb-2">Choose</h3>
-                    <p class="small mb-0">Browse our selection of premium beans</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <p class="h2 fw-bold mb-2">2</p>
-                    <h3 class="h6 mb-2">Order</h3>
-                    <p class="small mb-0">Place your order online in minutes</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <p class="h2 fw-bold mb-2">3</p>
-                    <h3 class="h6 mb-2">Roast</h3>
-                    <p class="small mb-0">We roast to order for maximum freshness</p>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <p class="h2 fw-bold mb-2">4</p>
-                    <h3 class="h6 mb-2">Enjoy</h3>
-                    <p class="small mb-0">Delivered fresh to your door</p>
+        <section class="our-story-section">
+            <div class="container-fluid px-0">
+                <div class="row g-0 align-items-stretch">
+                    <div class="col-12 col-md-6 p-0">
+                        <div class="story-img-holder">
+                            <img src="assets/story.png" alt="Our roastery and craft" class="story-img">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 our-story-text d-flex align-items-center">
+                        <div class="p-4 p-lg-5 w-100">
+                            <h2 class="mb-3 text-accent">Our story</h2>
+                            <p class="mb-3">
+                                We source the finest coffee beans from around the world and roast them to perfection. Our commitment to quality and sustainability drives everything we do.
+                            </p>
+                            <p class="mb-4">
+                                Each batch is carefully crafted to bring out unique flavor profiles that coffee enthusiasts love. From bean selection to final roast, every step is executed with precision.
+                            </p>
+                            <a href="#" class="btn btn-outline-accent rounded-0 text-uppercase">Learn more</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
-        <section>
-            <h2 class="text-center mb-5">Featured products</h2>
-
+        <section class="section-y">
+            <div class="container">
+                <h2 class="text-center mb-5 text-accent">How it works</h2>
+                <div class="row g-4 text-center">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="how-step-num d-flex align-items-center justify-content-center mb-3">
+                            <p class="h2 fw-bold text-accent mb-0">1</p>
+                        </div>
+                        <h3 class="h6 mb-2 text-accent text-uppercase">Choose</h3>
+                        <p class="small text-white-50 mb-0">Browse our selection of premium beans</p>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="how-step-num d-flex align-items-center justify-content-center mb-3">
+                            <p class="h2 fw-bold text-accent mb-0">2</p>
+                        </div>
+                        <h3 class="h6 mb-2 text-accent text-uppercase">Order</h3>
+                        <p class="small text-white-50 mb-0">Place your order online in minutes</p>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="how-step-num d-flex align-items-center justify-content-center mb-3">
+                            <p class="h2 fw-bold text-accent mb-0">3</p>
+                        </div>
+                        <h3 class="h6 mb-2 text-accent text-uppercase">Roast</h3>
+                        <p class="small text-white-50 mb-0">We roast to order for maximum freshness</p>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="how-step-num d-flex align-items-center justify-content-center mb-3">
+                            <p class="h2 fw-bold text-accent mb-0">4</p>
+                        </div>
+                        <h3 class="h6 mb-2 text-accent text-uppercase">Enjoy</h3>
+                        <p class="small text-white-50 mb-0">Delivered fresh to your door</p>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section class="container py-5">
-            <h2 class="text-center mb-5">Customer reviews</h2>
+        <section class="section-y">
+            <div class="container">
+                <h2 class="mb-5 text-accent text-start text-center">Featured products</h2>
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                            <div class="ratio ratio-1x1 mb-3 shadow-sm">
+                                <img src="assets/brazilian.png" alt="Brazilian Santos" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+                            </div>
+                            <h3 class="h6 fw-bold text-accent text-uppercase mb-1">Brazilian Santos</h3>
+                            <p class="small text-white-50 mb-2">Single Origin</p>
+                            <p class="small mb-1"><span class="text-white-50">Origin:</span> Brazil</p>
+                            <p class="small mb-1"><span class="text-white-50">Roast:</span> Medium</p>
+                            <p class="small mb-3"><span class="text-white-50">Weight:</span> 250g</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-1">
+                                <span class="fw-bold text-accent">15,99 €</span>
+                                <a href="src/product.html" class="btn btn-accent btn-sm rounded-0 text-uppercase small">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                            <div class="ratio ratio-1x1 mb-3 shadow-sm">
+                                <img src="assets/columbian_supremo.png" alt="Colombian Supremo" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+                            </div>
+                            <h3 class="h6 fw-bold text-accent text-uppercase mb-1">Colombian Supremo</h3>
+                            <p class="small text-white-50 mb-2">Single Origin</p>
+                            <p class="small mb-1"><span class="text-white-50">Origin:</span> Colombia</p>
+                            <p class="small mb-1"><span class="text-white-50">Roast:</span> Medium</p>
+                            <p class="small mb-3"><span class="text-white-50">Weight:</span> 250g</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-1">
+                                <span class="fw-bold text-accent">16,99 €</span>
+                                <a href="src/product.html" class="btn btn-accent btn-sm rounded-0 text-uppercase small">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                            <div class="ratio ratio-1x1 mb-3 shadow-sm">
+                                <img src="assets/ethiopian_1.png" alt="Ethiopian Yirgacheffe" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+                            </div>
+                            <h3 class="h6 fw-bold text-accent text-uppercase mb-1">Ethiopian Yirgacheffe</h3>
+                            <p class="small text-white-50 mb-2">Single Origin</p>
+                            <p class="small mb-1"><span class="text-white-50">Origin:</span> Ethiopia</p>
+                            <p class="small mb-1"><span class="text-white-50">Roast:</span> Light</p>
+                            <p class="small mb-3"><span class="text-white-50">Weight:</span> 250g</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-1">
+                                <span class="fw-bold text-accent">18,99 €</span>
+                                <a href="src/product.html" class="btn btn-accent btn-sm rounded-0 text-uppercase small">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                            <div class="ratio ratio-1x1 mb-3 shadow-sm">
+                                <img src="assets/costarica.png" alt="Costa Rican Tarrazu" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+                            </div>
+                            <h3 class="h6 fw-bold text-accent text-uppercase mb-1">Costa Rican Tarrazu</h3>
+                            <p class="small text-white-50 mb-2">Single Origin</p>
+                            <p class="small mb-1"><span class="text-white-50">Origin:</span> Costa Rica</p>
+                            <p class="small mb-1"><span class="text-white-50">Roast:</span> Medium</p>
+                            <p class="small mb-3"><span class="text-white-50">Weight:</span> 250g</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-1">
+                                <span class="fw-bold text-accent">18,99 €</span>
+                                <a href="src/product.html" class="btn btn-accent btn-sm rounded-0 text-uppercase small">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column h-100">
+                            <div class="ratio ratio-1x1 mb-3 shadow-sm">
+                                <img src="assets/decaf.png" alt="Decaf Colombia" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover">
+                            </div>
+                            <h3 class="h6 fw-bold text-accent text-uppercase mb-1">Decaf Colombia</h3>
+                            <p class="small text-white-50 mb-2">Decaf</p>
+                            <p class="small mb-1"><span class="text-white-50">Origin:</span> Colombia</p>
+                            <p class="small mb-1"><span class="text-white-50">Roast:</span> Medium</p>
+                            <p class="small mb-3"><span class="text-white-50">Weight:</span> 250g</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-1">
+                                <span class="fw-bold text-accent">17,99 €</span>
+                                <a href="src/product.html" class="btn btn-accent btn-sm rounded-0 text-uppercase small">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center justify-content-center py-md-5">
+                        <a href="src/shop.html" class="text-decoration-none text-accent text-center">
+                            <div class="fs-2 lh-1 mb-3">→</div>
+                            <span class="d-block text-uppercase small fw-bold">View all products</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-y">
+            <div class="container">
+            <h2 class="text-center mb-5 text-accent">Customer reviews</h2>
             <div class="row g-4">
-                <div class="col-md-4 p-4">
-                    <img src="assets/customer-1.png" alt="customer 1" class="img-fluid mb-2" style="max-width: 80px;">
-                    <p class="mb-2">Best coffee I've ever had. The Ethiopian blend is absolutely incredible. Fresh roast quality you can taste.</p>
-                    <p class="fw-bold text-uppercase mb-0">- Sarah Mitchell</p>
+                <div class="col-md-4 p-4 text-start">
+                    <img src="assets/review_starts.png" alt="" class="img-fluid mb-3 review-stars">
+                    <p class="mb-3">Best coffee I've ever had. The Ethiopian blend is absolutely incredible. Fresh roast quality you can taste.</p>
+                    <p class="fw-bold text-uppercase text-accent mb-0">- Sarah Mitchell</p>
                 </div>
-                <div class="col-md-4 p-4">
-                    <img src="assets/customer-2.png" alt="customer 2" class="img-fluid mb-2" style="max-width: 80px;">
-                    <p class="mb-2">Amazing service and quality. The coffee arrives fresh and the flavor is consistently excellent every time.</p>
-                    <p class="fw-bold text-uppercase mb-0">- James Rodriguez</p>
+                <div class="col-md-4 p-4 text-start">
+                    <img src="assets/review_starts.png" alt="" class="img-fluid mb-3 review-stars">
+                    <p class="mb-3">Amazing service and quality. The coffee arrives fresh and the flavor is consistently excellent every time.</p>
+                    <p class="fw-bold text-uppercase text-accent mb-0">- James Rodriguez</p>
                 </div>
-                <div class="col-md-4 p-4">
-                    <img src="assets/customer-3.png" alt="customer 3" class="img-fluid mb-2" style="max-width: 80px;">
-                    <p class="mb-2">Love the subscription service! Never run out of coffee and the quality is always top notch. Highly recommend.</p>
-                    <p class="fw-bold text-uppercase mb-0">- Emma Chen</p>
+                <div class="col-md-4 p-4 text-start">
+                    <img src="assets/review_starts.png" alt="" class="img-fluid mb-3 review-stars">
+                    <p class="mb-3">Love the subscription service! Never run out of coffee and the quality is always top notch. Highly recommend.</p>
+                    <p class="fw-bold text-uppercase text-accent mb-0">- Emma Chen</p>
                 </div>
             </div>
+            </div>
         </section>
-        <section class="container py-5">
-            <h2 class="text-center mb-5">Why choose us</h2>
+        <section class="section-y">
+            <div class="container">
+            <h2 class="text-center mb-5 text-accent">Why choose us</h2>
             <div class="row g-4">
-                <div class="col-md-6 d-flex">
-                    <img src="assets/checkmark.png" alt="checkmark" class="me-3" style="width: 32px; height: 32px;">
+                <div class="col-md-6 d-flex gap-3">
+                    <img src="assets/checkmark.png" alt="" width="48" height="48" class="flex-shrink-0">
                     <div>
-                        <h3 class="h6 fw-bold mb-1">Ethical sourcing</h3>
+                        <h3 class="h6 fw-bold text-accent mb-1">Ethical sourcing</h3>
                         <p class="mb-0">We work directly with farmers to ensure fair trade practices and sustainable farming methods.</p>
                     </div>
                 </div>
-                <div class="col-md-6 d-flex">
-                    <img src="assets/checkmark.png" alt="checkmark" class="me-3" style="width: 32px; height: 32px;">
+                <div class="col-md-6 d-flex gap-3">
+                    <img src="assets/checkmark.png" alt="" width="48" height="48" class="flex-shrink-0">
                     <div>
-                        <h3 class="h6 fw-bold mb-1">Expert roasting</h3>
+                        <h3 class="h6 fw-bold text-accent mb-1">Expert roasting</h3>
                         <p class="mb-0">Our master roasters have decades of experience crafting the perfect roast profile for each origin.</p>
                     </div>
                 </div>
-                <div class="col-md-6 d-flex">
-                    <img src="assets/checkmark.png" alt="checkmark" class="me-3" style="width: 32px; height: 32px;">
+                <div class="col-md-6 d-flex gap-3">
+                    <img src="assets/checkmark.png" alt="" width="48" height="48" class="flex-shrink-0">
                     <div>
-                        <h3 class="h6 fw-bold mb-1">Small batch</h3>
+                        <h3 class="h6 fw-bold text-accent mb-1">Small batch</h3>
                         <p class="mb-0">We roast in small batches to maintain quality control and ensure peak freshness.</p>
                     </div>
                 </div>
-                <div class="col-md-6 d-flex">
-                    <img src="assets/checkmark.png" alt="checkmark" class="me-3" style="width: 32px; height: 32px;">
+                <div class="col-md-6 d-flex gap-3">
+                    <img src="assets/checkmark.png" alt="" width="48" height="48" class="flex-shrink-0">
                     <div>
-                        <h3 class="h6 fw-bold mb-1">Fast shipping</h3>
+                        <h3 class="h6 fw-bold text-accent mb-1">Fast shipping</h3>
                         <p class="mb-0">Orders ship within 24 hours so you get your coffee at its absolute freshest.</p>
                     </div>
                 </div>
             </div>
+            </div>
         </section>
-        <section class="container py-5">
-            <h2 class="text-center mb-5">Follow us on Instagram</h2>
+        <section class="section-y">
+            <div class="container">
+            <h2 class="text-center mb-5 text-accent">Follow us on Instagram</h2>
             <div class="row g-3 mb-4">
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
-                <div class="col-6 col-lg-3"><img src="" alt="" class="img-fluid w-100" style="aspect-ratio: 1;"></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/brazilianIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/columbianIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/costaIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/decafIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/espressoIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/ethiopianIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/sopkaIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
+                <div class="col-6 col-lg-3"><div class="ratio ratio-1x1"><img src="assets/kvetinkyIG.png" alt="" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div></div>
             </div>
             <div class="text-center">
-                <a href="#" class="btn btn-outline-dark">@coffeeshop</a>
+                <a href="#" class="btn btn-outline-accent rounded-0 text-uppercase small">@coffeeshop</a>
+            </div>
             </div>
         </section>
-        <section class="container py-5">
-            <h2 class="text-center mb-2">Subscribe to our newsletter</h2>
-            <p class="text-center text-secondary mb-4">Get exclusive offers and brewing tips delivered to your inbox</p>
+        <section class="section-y-lg border-bottom border-secondary">
+            <div class="container">
+            <h2 class="text-center mb-3 text-accent">Subscribe to our newsletter</h2>
+            <p class="text-center mb-4">Get exclusive offers and brewing tips delivered to your inbox</p>
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6">
                     <div class="row g-2 newsletter-form">
@@ -215,31 +339,32 @@
                             <input type="email" class="form-control" placeholder="Enter your email" required>
                         </div>
                         <div class="col-12 col-lg-4">
-                            <button class="btn btn-dark w-100" type="submit">Subscribe</button>
+                            <button class="btn btn-accent w-100 rounded-0 text-uppercase small" type="submit">Subscribe</button>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
         </section>
     </main>
-    <footer class="container py-5">
+    <footer class="site-footer container">
         <div class="row">
             <div class="col-md-4 mb-4 mb-md-0">
-                <h2 class="h6 mb-3">About</h2>
-                <a href="" class="d-block text-decoration-none text-secondary mb-1">Our Story</a>
-                <a href="" class="d-block text-decoration-none text-secondary mb-1">Our Team</a>
-                <a href="" class="d-block text-decoration-none text-secondary mb-1">Sustainability</a>
-                <a href="" class="d-block text-decoration-none text-secondary">Careers</a>
+                <h2 class="h6 mb-3 text-accent">About</h2>
+                <a href="" class="d-block mb-1">Our Story</a>
+                <a href="" class="d-block mb-1">Our Team</a>
+                <a href="" class="d-block mb-1">Sustainability</a>
+                <a href="" class="d-block">Careers</a>
             </div>
             <div class="col-md-4 mb-4 mb-md-0">
-                <h2 class="h6 mb-3">Help</h2>
-                <a href="" class="d-block text-decoration-none text-secondary mb-1">FAQ</a>
-                <a href="" class="d-block text-decoration-none text-secondary mb-1">Shipping Info</a>
-                <a href="" class="d-block text-decoration-none text-secondary mb-1">Returns</a>
-                <a href="" class="d-block text-decoration-none text-secondary">Contact Us</a>
+                <h2 class="h6 mb-3 text-accent">Help</h2>
+                <a href="" class="d-block mb-1">FAQ</a>
+                <a href="" class="d-block mb-1">Shipping Info</a>
+                <a href="" class="d-block mb-1">Returns</a>
+                <a href="" class="d-block">Contact Us</a>
             </div>
             <div class="col-md-4">
-                <h2 class="h6 mb-3">Contact</h2>
+                <h2 class="h6 mb-3 text-accent">Contact</h2>
                 <p class="mb-1">Email: info@coffeeshop.com</p>
                 <p class="mb-1">Phone: (555) 123-4567</p>
                 <p class="mb-0">Hours: Mon-Fri 9am-5pm</p>
