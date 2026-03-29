@@ -31,11 +31,7 @@
     padding-bottom: var(--section-y-lg);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 .hero-block {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.1)),
@@ -57,15 +53,13 @@
 .btn-outline-accent:hover {
     background-color: var(--accent);
     color: #0d0d0d !important;
-    border-color: var(--accent); 
+    border-color: var(--accent);
 }
 
 .how-step-num {
     background-color: #1a1a16;
     width: 5rem;
     aspect-ratio: 1;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .btn-accent {
@@ -119,48 +113,24 @@ body {
     --bs-body-color: var(--body-text);
 }
 
-.text-white {
-    color: var(--body-text) !important;
-}
 
-.text-white-50 {
-    color: var(--body-text-muted) !important;
-}
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: 700;
     text-transform: uppercase;
     color: var(--accent) !important;
 }
 
-.newsletter-form .form-control,
-.newsletter-form .btn {
-    border-radius: 0;
-}
 
-.newsletter-form .form-control {
-    background-color: #1a1a1a;
-    border-color: rgba(153, 161, 175, 0.25);
-    color: var(--body-text);
-}
-
-.newsletter-form .form-control::placeholder {
-    color: var(--body-text-muted);
-}
-
-.newsletter-form .form-control:focus {
-    border-color: var(--accent);
-    box-shadow: none;
-    background-color: #1a1a1a;
-    color: var(--body-text);
-}
 
 .site-footer a {
     color: var(--body-text);
     text-decoration: none;
-}
-
-.site-footer a {
     transition: color 0.2s ease, text-underline-offset 0.2s ease;
 }
 
@@ -175,10 +145,7 @@ h1, h2, h3, h4, h5, h6 {
     padding-bottom: var(--section-y);
 }
 
-.login-form .form-control,
-.login-form .btn {
-    border-radius: 0;
-}
+
 
 main.auth-main {
     min-height: calc(100vh - 5rem);
@@ -190,26 +157,11 @@ main.auth-main {
     padding-bottom: 2rem;
 }
 
-main.auth-main > section {
+main.auth-main>section {
     width: 100%;
 }
 
-.border-secondary {
-    border-color: var(--line-border) !important;
-}
 
-.border {
-    border-color: var(--line-border) !important;
-}
-
-hr {
-    border-color: var(--line-border) !important;
-    opacity: 1;
-}
-
-.list-group-item {
-    border-color: var(--line-border) !important;
-}
 
 .offcanvas-backdrop {
     background: rgba(0, 0, 0, 0.5) !important;
@@ -404,7 +356,7 @@ a.card.border-0.d-flex.flex-column.h-100 {
     box-shadow: none;
 }
 
-a.card.border-0.d-flex.flex-column.h-100 > .d-flex.mt-auto {
+a.card.border-0.d-flex.flex-column.h-100>.d-flex.mt-auto {
     margin-left: -1rem;
     margin-right: -1rem;
     margin-bottom: 0;
@@ -417,11 +369,11 @@ a.card.border-0.d-flex.flex-column.h-100 > .d-flex.mt-auto {
     border-radius: 0 0 0.2rem 0.2rem;
 }
 
-a.card.border-0.d-flex.flex-column.h-100 > .d-flex.mt-auto .fw-bold {
+a.card.border-0.d-flex.flex-column.h-100>.d-flex.mt-auto .fw-bold {
     color: var(--accent-bright);
 }
 
-a.card.border-0.d-flex.flex-column.h-100 > .d-flex.mt-auto .btn {
+a.card.border-0.d-flex.flex-column.h-100>.d-flex.mt-auto .btn {
     border-color: rgba(212, 165, 115, 0.45);
 }
 
@@ -443,11 +395,11 @@ a.card.border-0.d-flex.flex-column.h-100 > .d-flex.mt-auto .btn {
     border-color: rgba(212, 165, 115, 0.22) !important;
 }
 
-.table-hover > tbody > tr:hover > * {
+.table-hover>tbody>tr:hover>* {
     color: var(--accent-bright) !important;
 }
 
-.table-hover > tbody > tr:hover {
+.table-hover>tbody>tr:hover {
     background-color: rgba(212, 165, 115, 0.16) !important;
 }
 
@@ -553,21 +505,22 @@ input[type="file"].form-control:hover::file-selector-button {
     text-shadow: 0 0 10px var(--accent-glow);
 }
 
-.border.border-secondary,
-.card.border-secondary {
-    border-color: rgba(212, 165, 115, 0.3) !important;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.border.border-secondary:hover,
-.card.border-secondary:hover {
-    border-color: rgba(232, 196, 154, 0.65) !important;
-    box-shadow: 0 0 0 1px rgba(212, 165, 116, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
-}
-
-tbody, td, tfoot, th, thead, tr {
+tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
     border-style: none !important;
 }
+
 tr:nth-child(even) {
     background-color: rgba(212, 165, 115, 0.112) !important;
+}
+
+@media (max-width: 991.98px) {
+    .navbar.container {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
 }
