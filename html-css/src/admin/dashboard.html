@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin – Product management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="sticky-top bg-black">
+        <nav class="container navbar navbar-expand-lg navbar-dark py-3">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="../../index.html">
+                <img src="../../assets/logo.png" alt="" width="40" height="40">
+                <span class="brand-name text-accent">Gemini Coffee</span>
+            </a>
+            <ul class="navbar-nav ms-auto d-none d-lg-flex flex-row align-items-center gap-1">
+                <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="../public/shop.html">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="../order/basket.html">Cart</a></li>
+                <li class="nav-item"><a class="nav-link active" href="../admin/dashboard.html" aria-current="page">Admin</a></li>
+            </ul>
+            <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../public/shop.html">Shop</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../order/basket.html">Cart</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="../admin/dashboard.html" aria-current="page">Admin</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container py-5">
+        <section class="border border-secondary p-4 mb-4">
+            <h1 class="h3 fw-bold text-uppercase mb-1">Admin dashboard</h1>
+            <p class="text-secondary mb-0">Product management</p>
+        </section>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <p class="mb-0"><span class="text-secondary">Total products:</span> <strong>8</strong></p>
+            <a href="../admin/product-add.html" class="btn btn-dark rounded-0">+ Add product</a>
+        </div>
+
+        <div class="table-responsive border border-secondary">
+            <table class="table table-bordered table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Origin</th>
+                        <th scope="col">Roast</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td class="fw-bold">Brazilian Santos</td>
+                        <td>Single Origin</td>
+                        <td>15,99 €</td>
+                        <td>Brazil</td>
+                        <td>Medium</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="fw-bold">Colombian Supremo</td>
+                        <td>Single Origin</td>
+                        <td>16,99 €</td>
+                        <td>Colombia</td>
+                        <td>Medium</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="fw-bold">Costa Rican Tarrazu</td>
+                        <td>Single Origin</td>
+                        <td>18,99 €</td>
+                        <td>Costa Rica</td>
+                        <td>Medium</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td class="fw-bold">Decaf Colombia</td>
+                        <td>Decaf</td>
+                        <td>17,99 €</td>
+                        <td>Colombia</td>
+                        <td>Medium</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td class="fw-bold">Espresso Blend</td>
+                        <td>Blend</td>
+                        <td>19,99 €</td>
+                        <td>Multiple</td>
+                        <td>Dark</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td class="fw-bold">Ethiopian Yirgacheffe</td>
+                        <td>Single Origin</td>
+                        <td>18,99 €</td>
+                        <td>Ethiopia</td>
+                        <td>Light</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td class="fw-bold">Guatemala Antigua Reserve</td>
+                        <td>Single Origin</td>
+                        <td>18,99 €</td>
+                        <td>Guatemala</td>
+                        <td>Medium</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td class="fw-bold">Sumatra Mandheling</td>
+                        <td>Single Origin</td>
+                        <td>19,99 €</td>
+                        <td>Indonesia</td>
+                        <td>Medium</td>
+                        <td class="text-nowrap">
+                            <a href="../admin/product-edit.html" class="btn btn-outline-dark btn-sm rounded-0">Edit</a>
+                            <button type="button" class="btn btn-dark btn-sm rounded-0">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

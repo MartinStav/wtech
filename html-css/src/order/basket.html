@@ -6,7 +6,7 @@
     <title>Shopping cart - Premium coffee beans</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -14,8 +14,8 @@
 <body>
     <header class="sticky-top bg-black">
         <nav class="container navbar navbar-expand-lg navbar-dark py-3">
-            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="../index.html">
-                <img src="../assets/logo.png" alt="" width="40" height="40">
+            <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="../../index.html">
+                <img src="../../assets/logo.png" alt="" width="40" height="40">
                 <span class="brand-name text-accent">Gemini Coffee</span>
             </a>
             
@@ -31,16 +31,16 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="../index.html">Home</a>
+                            <a class="nav-link" href="../../index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
+                            <a class="nav-link" href="../public/shop.html">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="cart.html">Cart <span class="badge nav-cart-badge rounded-0 align-middle">1</span></a>
+                            <a class="nav-link" href="../order/basket.html">Cart <span class="badge nav-cart-badge rounded-0 align-middle">1</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.html">Login</a>
+                            <a class="nav-link" href="../auth/login.html">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -49,8 +49,8 @@
     </header>
     <main class="container py-5">
         <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
-            <h1 class="h2 fw-bold text-decoration-underline mb-0">Shopping cart</h1>
-            <a href="cart-empty.html" class="btn btn-outline-dark btn-sm rounded-0">Clear cart</a>
+            <h1 class="h2 fw-bold mb-0">Shopping cart</h1>
+            <a href="../order/basket-empty.html" class="btn btn-outline-dark btn-sm rounded-0">Clear cart</a>
         </div>
 
         <div class="row g-4">
@@ -58,10 +58,10 @@
                 <div class="border p-3 position-relative">
                     <button type="button" class="btn btn-link btn-sm text-secondary position-absolute top-0 end-0 mt-2 me-2 text-decoration-none">Remove</button>
                     <div class="row g-3">
-                        <div class="col-sm-4 col-md-3">
-                            <div class="ratio ratio-1x1"><img src="../assets/brazilian.png" alt="Brazilian Santos" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
+                        <div class="col-4 col-md-3">
+                            <div class="ratio ratio-1x1"><img src="../../assets/brazilian.png" alt="Brazilian Santos" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
                         </div>
-                        <div class="col-sm-8 col-md-9">
+                        <div class="col-8 col-md-9">
                             <h2 class="h5 fw-bold mb-1">Colombian Supremo</h2>
                             <p class="small text-secondary mb-3">Colombia | Medium | 250g</p>
                             <div class="d-flex flex-wrap align-items-center gap-2">
@@ -97,8 +97,8 @@
                         <span>Total</span>
                         <span>15,99 €</span>
                     </div>
-                    <a href="checkout.html" class="btn btn-dark w-100 rounded-0 mb-2">Proceed to checkout</a>
-                    <a href="shop.html" class="btn btn-outline-dark w-100 rounded-0">Continue shopping</a>
+                    <a href="../order/shipping.html" class="btn btn-dark w-100 rounded-0 mb-2">Proceed to checkout</a>
+                    <a href="../public/shop.html" class="btn btn-outline-dark w-100 rounded-0">Continue shopping</a>
                 </div>
             </div>
         </div>
