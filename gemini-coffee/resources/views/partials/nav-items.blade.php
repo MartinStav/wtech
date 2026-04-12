@@ -9,15 +9,22 @@
 </li>
 @guest
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('/src/auth/login.php') }}">Login</a>
+        <a class="nav-link" href="{{ route('login') }}">Login</a>
     </li>
 @else
-    <li class="nav-item">
-        <span class="nav-link text-accent mb-0">{{ auth()->user()->role ?? auth()->user()->name }}</span>
-    </li>
     @if (auth()->user()->isAdmin())
         <li class="nav-item">
             <a class="nav-link" href="{{ url('/src/admin/dashboard.php') }}">Admin</a>
         </li>
+    @else
+        <li class="nav-item">
+            <span class="nav-link text-accent mb-0">{{ auth()->user()->role ?? auth()->user()->name }}</span>
+        </li>
     @endif
+    <li class="nav-item">
+        <form method="POST" action="{{ route('logout') }}" class="mb-0">
+            @csrf
+            <button type="submit" class="nav-link text-accent mb-0 bg-transparent border-0 rounded-0">Logout</button>
+        </form>
+    </li>
 @endguest

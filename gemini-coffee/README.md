@@ -45,7 +45,10 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate
+php artisan db:seed
 php artisan serve
 ```
 
 Otvor **[http://127.0.0.1:8000](http://127.0.0.1:8000)**.
+
+Po seederi existuje účet **admin** (`admin@gmail.com` / heslo `admin`, rola `admin`) na vstup do admin časti. Ostatní používatelia sa registrujú cez Register (rola `customer`).

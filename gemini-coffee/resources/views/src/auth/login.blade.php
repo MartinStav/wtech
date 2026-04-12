@@ -9,34 +9,31 @@
                         <h1 class="mb-2">Login</h1>
                         <p class="text-secondary mb-0">Enter your credentials to access your account</p>
                     </div>
-                    <form class="login-form">
+                    <form class="login-form" method="post" action="{{ route('login') }}">
+                        @csrf
                         <div class="mb-3">
-                            <label for="loginUser" class="form-label form-label-sm fw-bold text-uppercase">Email / Username</label>
-                            <input required type="text" class="form-control" id="loginUser" placeholder="your@@email.com" autocomplete="username">
+                            <label for="email" class="form-label form-label-sm fw-bold text-uppercase">Email</label>
+                            <input required type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="{{ 'your@email.com' }}" autocomplete="username">
+                            @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label form-label-sm fw-bold text-uppercase">Password</label>
-                            <input required type="password" class="form-control" id="password" placeholder="••••••••">
+                            <input required type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="••••••••" autocomplete="current-password">
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="remember" value="1" class="form-check-input" id="remember">
+                            <label class="form-check-label small" for="remember">Remember me</label>
                         </div>
                         <button type="submit" class="btn btn-dark w-100 mb-3 small fw-bold text-uppercase py-2">Login</button>
-                        <p class="text-center mb-0">Don't have an account? <a href="{{ url('/src/auth/register.php') }}" class="text-decoration-underline text-dark">Register</a></p>
+                        <p class="text-center mb-0">Don't have an account? <a href="{{ route('register') }}" class="text-decoration-underline text-dark">Register</a></p>
                     </form>
                 </div>
             </div>
         </section>
     </main>
 @endsection
-@push('scripts')
-<script>
-        document.querySelector('.login-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            var u = document.getElementById('loginUser').value.trim();
-            var p = document.getElementById('password').value;
-            if (u === 'admin' && p === 'admin') {
-                window.location.href = @json(url('/src/admin/dashboard.php'));
-            } else {
-                window.location.href = @json(url('/src/public/shop.php'));
-            }
-        });
-    </script>
-@endpush

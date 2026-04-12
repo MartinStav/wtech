@@ -13,9 +13,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasMenu">
+        <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasMenu">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title">Menu</h5>
+                <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
             </div>
             <div class="offcanvas-body">
