@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ShopController extends Controller
 {
@@ -27,13 +28,14 @@ class ShopController extends Controller
             ->active();
 
         if ($search = trim((string) $request->query('q', ''))) {
-            $like = '%'.$search.'%';
-            $query->where(function ($q) use ($like, $search) {
-                $q->where('name', 'like', $like)
-                    ->orWhere('description', 'like', $like)
-                    ->orWhere('origin_label', 'like', $like)
+            $like = '%'.Str::lower($search).'%';
+            $query->where(function ($q) use ($like) {
+                $q->whereRaw('LOWER(name) LIKE ?', [$like])
+                    ->orWhereRaw('LOWER(description) LIKE ?', [$like])
+                    ->orWhereRaw('LOWER(COALESCE(origin_label, \'\')) LIKE ?', [$like])
+                    ->orWhereRaw('LOWER(roast_level) LIKE ?', [$like])
                     ->orWhereHas('category', function ($cq) use ($like) {
-                        $cq->where('name', 'like', $like);
+                        $cq->whereRaw('LOWER(name) LIKE ?', [$like]);
                     });
             });
         }

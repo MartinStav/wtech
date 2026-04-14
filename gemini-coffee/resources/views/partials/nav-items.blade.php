@@ -18,7 +18,7 @@
         </li>
     @else
         <li class="nav-item">
-            <span class="nav-link text-accent mb-0">{{ auth()->user()->role ?? auth()->user()->name }}</span>
+            <span class="nav-link text-accent mb-0">{{ auth()->user()->name }}</span>
         </li>
     @endif
     <li class="nav-item">

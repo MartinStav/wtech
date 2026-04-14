@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -28,9 +29,11 @@ Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remov
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 Route::get('/src/order/basket-empty.php', fn () => redirect()->route('cart.index'));
 
-Route::view('/src/order/shipping.php', 'src.order.shipping');
-Route::view('/src/order/payment.php', 'src.order.payment');
-Route::view('/src/order/review.php', 'src.order.review');
+Route::get('/src/order/shipping.php', [CheckoutController::class, 'showShipping']);
+Route::post('/src/order/shipping.php', [CheckoutController::class, 'storeShipping']);
+Route::get('/src/order/payment.php', [CheckoutController::class, 'showPayment']);
+Route::post('/src/order/payment.php', [CheckoutController::class, 'storePayment']);
+Route::get('/src/order/review.php', [CheckoutController::class, 'showReview']);
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/src/admin/dashboard.php', 'src.admin.dashboard');

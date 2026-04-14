@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
 use App\Models\Product;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 class CartController extends Controller
 {
     private const SESSION_KEY = 'cart';
@@ -14,6 +18,14 @@ class CartController extends Controller
     /** @return array<int, int> product_id => quantity */
     private function lines(Request $request): array
     {
+        if (Auth::check()) {
+            return CartItem::query()
+                ->where('user_id', Auth::id())
+                ->pluck('quantity', 'product_id')
+                ->map(fn ($q) => (int) $q)
+                ->all();
+        }
+
         $raw = $request->session()->get(self::SESSION_KEY, []);
 
         return is_array($raw) ? array_map('intval', $raw) : [];
@@ -21,6 +33,26 @@ class CartController extends Controller
 
     private function saveLines(Request $request, array $lines): void
     {
+        if (Auth::check()) {
+            $userId = (int) Auth::id();
+            DB::transaction(function () use ($userId, $lines): void {
+                CartItem::query()->where('user_id', $userId)->delete();
+                foreach ($lines as $productId => $qty) {
+                    $qty = (int) $qty;
+                    if ($qty < 1) {
+                        continue;
+                    }
+                    CartItem::query()->create([
+                        'user_id' => $userId,
+                        'product_id' => (int) $productId,
+                        'quantity' => $qty,
+                    ]);
+                }
+            });
+
+            return;
+        }
+
         $request->session()->put(self::SESSION_KEY, $lines);
     }
 

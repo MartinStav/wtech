@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Support\GuestCartMerger;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,6 +26,9 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+            /** @var User $user */
+            $user = Auth::user();
+            GuestCartMerger::mergeIntoUser($request, $user);
 
             return redirect()->intended(url('/home.php'));
         }
@@ -56,6 +60,7 @@ class AuthController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+        GuestCartMerger::mergeIntoUser($request, $user);
 
         return redirect(url('/home.php'));
     }

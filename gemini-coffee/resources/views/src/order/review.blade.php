@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('title', 'Checkout - Review')
 @section('content')
+@php
+    $ship = $shipping ?? [];
+    $pay = $payment ?? [];
+    $card = $pay['card_number'] ?? '';
+    $cardMask = $card !== '' ? '···· ' . substr($card, -4) : '';
+@endphp
 <main class="container py-5">
         <h1 class="h2 fw-bold mb-4">Checkout</h1>
 
@@ -25,6 +31,22 @@
                         <span class="fw-bold">15,99 €</span>
                     </div>
                 </div>
+                @if (! empty($ship))
+                    <div class="border p-4 mb-4">
+                        <h2 class="h6 fw-bold text-uppercase mb-3">Shipping</h2>
+                        <p class="small mb-1">{{ ($ship['first_name'] ?? '') }} {{ ($ship['last_name'] ?? '') }}</p>
+                        <p class="small mb-1 text-secondary">{{ $ship['email'] ?? '' }}</p>
+                        <p class="small mb-0">{{ $ship['address'] ?? '' }}, {{ $ship['city'] ?? '' }}, {{ $ship['state'] ?? '' }} {{ $ship['zip'] ?? '' }}</p>
+                    </div>
+                @endif
+                @if (! empty($pay))
+                    <div class="border p-4 mb-4">
+                        <h2 class="h6 fw-bold text-uppercase mb-3">Payment</h2>
+                        <p class="small mb-1">{{ $pay['cardholder'] ?? '' }}</p>
+                        <p class="small mb-1 text-secondary">{{ $cardMask }}</p>
+                        <p class="small mb-0">Expires {{ $pay['expiry'] ?? '' }}</p>
+                    </div>
+                @endif
                 <div class="border p-4 mb-4">
                     <p class="small mb-0"><a href="#" class="text-decoration-none text-body">Terms and conditions</a> apply.</p>
                 </div>
