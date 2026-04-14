@@ -3,6 +3,9 @@
 @section('content')
 <main class="container py-5">
         <h1 class="h2 fw-bold mb-4">Shopping cart</h1>
+        @if (session('checkout_error'))
+            <div class="alert alert-warning rounded-0 small mb-4">{{ session('checkout_error') }}</div>
+        @endif
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="border p-5 text-center">

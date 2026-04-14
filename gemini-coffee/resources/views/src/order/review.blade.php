@@ -26,10 +26,13 @@
             <div class="col-lg-8">
                 <div class="border p-4 mb-4">
                     <h2 class="h6 fw-bold text-uppercase mb-3">Review order</h2>
-                    <div class="d-flex justify-content-between">
-                        <span>Colombian Supremo ×1</span>
-                        <span class="fw-bold">15,99 €</span>
-                    </div>
+                    @foreach ($cartRows as $row)
+                        @php $p = $row->product; @endphp
+                        <div class="d-flex justify-content-between small mb-2">
+                            <span>{{ $p->name }} ×{{ $row->quantity }}</span>
+                            <span class="fw-bold">{{ number_format($row->line_total, 2, ',', ' ') }} €</span>
+                        </div>
+                    @endforeach
                 </div>
                 @if (! empty($ship))
                     <div class="border p-4 mb-4">
@@ -52,51 +55,15 @@
                 </div>
                 <div class="d-flex flex-wrap gap-2">
                     <a href="{{ url('/src/order/payment.php') }}" class="btn btn-outline-dark rounded-0">Back</a>
-                    <button type="button" class="btn btn-dark rounded-0" data-bs-toggle="modal" data-bs-target="#paymentSuccessModal">Place order</button>
+                    <form method="post" action="{{ route('checkout.complete') }}" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-dark rounded-0">Place order</button>
+                    </form>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="border p-4">
-                    <h2 class="h6 fw-bold text-uppercase mb-3">Order summary</h2>
-                    <div class="d-flex justify-content-between small mb-2">
-                        <span>Colombian Supremo ×1</span>
-                        <span>15,99 €</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between mb-2 small">
-                        <span>Subtotal</span>
-                        <span>15,99 €</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2 small">
-                        <span>Shipping</span>
-                        <span>5,00 €</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3 small">
-                        <span>Tax</span>
-                        <span>1,36 €</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between fw-bold">
-                        <span>Total</span>
-                        <span>22,35 €</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-0 border">
-                    <div class="modal-header border-0 pb-0">
-                        <h2 class="modal-title h5 fw-bold mb-0" id="paymentSuccessModalLabel">Payment successful</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body pt-0">
-                        <p class="mb-0">Your payment was received and your order is confirmed. Thank you for your purchase.</p>
-                    </div>
-                    <div class="modal-footer border-0 pt-0">
-                        <a href="{{ url('/home.php') }}" class="btn btn-dark rounded-0">Continue to home</a>
-                    </div>
+                    @include('partials.checkout-order-summary')
                 </div>
             </div>
         </div>

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Support\CartContents;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -18,17 +18,7 @@ class CartController extends Controller
     /** @return array<int, int> product_id => quantity */
     private function lines(Request $request): array
     {
-        if (Auth::check()) {
-            return CartItem::query()
-                ->where('user_id', Auth::id())
-                ->pluck('quantity', 'product_id')
-                ->map(fn ($q) => (int) $q)
-                ->all();
-        }
-
-        $raw = $request->session()->get(self::SESSION_KEY, []);
-
-        return is_array($raw) ? array_map('intval', $raw) : [];
+        return CartContents::lines($request);
     }
 
     private function saveLines(Request $request, array $lines): void
@@ -63,28 +53,9 @@ class CartController extends Controller
             return view('src.order.basket-empty');
         }
 
-        $products = Product::query()
-            ->with(['category', 'images'])
-            ->active()
-            ->whereIn('id', array_keys($lines))
-            ->get()
-            ->keyBy('id');
-
-        $cartRows = new Collection;
-        $subtotal = 0.0;
-        foreach ($lines as $productId => $qty) {
-            $product = $products->get($productId);
-            if (! $product || $qty < 1) {
-                continue;
-            }
-            $lineTotal = (float) $product->price * $qty;
-            $subtotal += $lineTotal;
-            $cartRows->push((object) [
-                'product' => $product,
-                'quantity' => $qty,
-                'line_total' => $lineTotal,
-            ]);
-        }
+        $built = CartContents::rowsAndSubtotal($request);
+        $cartRows = $built['cartRows'];
+        $subtotal = $built['subtotal'];
 
         if ($cartRows->isEmpty()) {
             $this->saveLines($request, []);
@@ -174,7 +145,7 @@ class CartController extends Controller
 
     public function clear(Request $request): RedirectResponse
     {
-        $this->saveLines($request, []);
+        CartContents::clearAll($request);
 
         return redirect()->route('cart.index');
     }

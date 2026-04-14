@@ -34,6 +34,7 @@ Route::post('/src/order/shipping.php', [CheckoutController::class, 'storeShippin
 Route::get('/src/order/payment.php', [CheckoutController::class, 'showPayment']);
 Route::post('/src/order/payment.php', [CheckoutController::class, 'storePayment']);
 Route::get('/src/order/review.php', [CheckoutController::class, 'showReview']);
+Route::post('/src/order/complete.php', [CheckoutController::class, 'completeOrder'])->name('checkout.complete');
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::view('/src/admin/dashboard.php', 'src.admin.dashboard');

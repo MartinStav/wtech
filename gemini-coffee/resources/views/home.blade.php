@@ -2,6 +2,11 @@
 @section('title', 'Premium coffee beans')
 @section('content')
 <main>
+        @if (session('status') && ! session('order_placed'))
+            <div class="container pt-4">
+                <div class="alert alert-success rounded-0 small mb-0" role="alert">{{ session('status') }}</div>
+            </div>
+        @endif
         <section class="hero-block d-flex align-items-center">
             <div class="container py-5">
                 <div class="row">
@@ -245,4 +250,36 @@
             </div>
         </section>
     </main>
+
+    @if (session('order_placed'))
+        <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-0 border">
+                    <div class="modal-header border-0 pb-0">
+                        <h2 class="modal-title h5 fw-bold mb-0" id="paymentSuccessModalLabel">Payment successful</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-0">
+                        <p class="mb-0">Your payment was received and your order is confirmed. Thank you for your purchase.</p>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <a href="{{ url('/home.php') }}" class="btn btn-dark rounded-0">Continue to home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
+
+@if (session('order_placed'))
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var el = document.getElementById('paymentSuccessModal');
+    if (!el || !window.bootstrap || !bootstrap.Modal) return;
+    var modal = new bootstrap.Modal(el);
+    modal.show();
+});
+</script>
+@endpush
+@endif

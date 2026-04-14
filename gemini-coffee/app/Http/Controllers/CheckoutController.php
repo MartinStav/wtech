@@ -2,27 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\CartContents;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\View\View;
+
 class CheckoutController extends Controller
 {
     private const SESSION_KEY = 'checkout';
 
-    public function showShipping(Request $request): View
+    /**
+     * @return array{cartRows: \Illuminate\Support\Collection, subtotal: float, shippingFee: float, tax: float, total: float}|RedirectResponse
+     */
+    private function orderSummary(Request $request, string $shippingMethod): array|RedirectResponse
+    {
+        $built = CartContents::rowsAndSubtotal($request);
+        if ($built['cartRows']->isEmpty()) {
+            return redirect()
+                ->route('cart.index')
+                ->with('checkout_error', 'Your cart is empty.');
+        }
+
+        $shippingFee = CartContents::shippingEuros($shippingMethod);
+        $taxTotal = CartContents::taxAndTotal($built['subtotal'], $shippingFee);
+
+        return [
+            'cartRows' => $built['cartRows'],
+            'subtotal' => $built['subtotal'],
+            'shippingFee' => $shippingFee,
+            'tax' => $taxTotal['tax'],
+            'total' => $taxTotal['total'],
+        ];
+    }
+
+    public function showShipping(Request $request): View|RedirectResponse
     {
         $data = array_merge(
             session(self::SESSION_KEY.'.shipping', []),
             old() ?: []
         );
 
+        $shippingMethod = $data['shipping_method'] ?? 'standard';
+        $summary = $this->orderSummary($request, $shippingMethod);
+        if ($summary instanceof RedirectResponse) {
+            return $summary;
+        }
+
         return view('src.order.shipping', [
             'shipping' => $data,
+            ...$summary,
         ]);
     }
 
     public function storeShipping(Request $request): RedirectResponse
     {
+        if (CartContents::rowsAndSubtotal($request)['cartRows']->isEmpty()) {
+            return redirect()
+                ->route('cart.index')
+                ->with('checkout_error', 'Your cart is empty.');
+        }
+
         $validated = $request->validate([
             'shipping_method' => 'required|in:standard,express,overnight',
             'first_name' => 'required|string|max:100',
@@ -59,8 +98,15 @@ class CheckoutController extends Controller
             old() ?: []
         );
 
+        $shippingMethod = (string) $request->session()->get(self::SESSION_KEY.'.shipping.shipping_method', 'standard');
+        $summary = $this->orderSummary($request, $shippingMethod);
+        if ($summary instanceof RedirectResponse) {
+            return $summary;
+        }
+
         return view('src.order.payment', [
             'payment' => $data,
+            ...$summary,
         ]);
     }
 
@@ -68,6 +114,12 @@ class CheckoutController extends Controller
     {
         if (! $request->session()->has(self::SESSION_KEY.'.shipping')) {
             return redirect('/src/order/shipping.php');
+        }
+
+        if (CartContents::rowsAndSubtotal($request)['cartRows']->isEmpty()) {
+            return redirect()
+                ->route('cart.index')
+                ->with('checkout_error', 'Your cart is empty.');
         }
 
         $digits = preg_replace('/\D/', '', (string) $request->input('card_number', ''));
@@ -97,9 +149,38 @@ class CheckoutController extends Controller
             return redirect('/src/order/payment.php');
         }
 
+        $shippingMethod = (string) $request->session()->get(self::SESSION_KEY.'.shipping.shipping_method', 'standard');
+        $summary = $this->orderSummary($request, $shippingMethod);
+        if ($summary instanceof RedirectResponse) {
+            return $summary;
+        }
+
         return view('src.order.review', [
             'shipping' => $request->session()->get(self::SESSION_KEY.'.shipping'),
             'payment' => $request->session()->get(self::SESSION_KEY.'.payment'),
+            ...$summary,
         ]);
+    }
+
+    public function completeOrder(Request $request): RedirectResponse
+    {
+        if (! $request->session()->has(self::SESSION_KEY.'.shipping')
+            || ! $request->session()->has(self::SESSION_KEY.'.payment')) {
+            return redirect('/src/order/shipping.php')
+                ->with('checkout_error', 'Your checkout session expired. Please start again.');
+        }
+
+        if (CartContents::rowsAndSubtotal($request)['cartRows']->isEmpty()) {
+            $request->session()->forget(self::SESSION_KEY);
+
+            return redirect()
+                ->route('cart.index')
+                ->with('checkout_error', 'Your cart is empty.');
+        }
+
+        CartContents::clearAll($request);
+        $request->session()->forget(self::SESSION_KEY);
+
+        return redirect(url('/home.php'))->with('order_placed', true);
     }
 }

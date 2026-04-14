@@ -13,6 +13,9 @@
         @if (session('status'))
             <div class="alert alert-success rounded-0 small mb-4">{{ session('status') }}</div>
         @endif
+        @if (session('checkout_error'))
+            <div class="alert alert-warning rounded-0 small mb-4">{{ session('checkout_error') }}</div>
+        @endif
         @if ($errors->any())
             <div class="alert alert-danger rounded-0 small mb-4">{{ $errors->first() }}</div>
         @endif

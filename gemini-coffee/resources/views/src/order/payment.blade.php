@@ -55,29 +55,7 @@
             </div>
             <div class="col-lg-4">
                 <div class="border p-4">
-                    <h2 class="h6 fw-bold text-uppercase mb-3">Order summary</h2>
-                    <div class="d-flex justify-content-between small mb-2">
-                        <span>Colombian Supremo ×1</span>
-                        <span>15,99 €</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between mb-2 small">
-                        <span>Subtotal</span>
-                        <span>15,99 €</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2 small">
-                        <span>Shipping</span>
-                        <span>5,00 €</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3 small">
-                        <span>Tax</span>
-                        <span>1,36 €</span>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between fw-bold">
-                        <span>Total</span>
-                        <span>22,35 €</span>
-                    </div>
+                    @include('partials.checkout-order-summary')
                 </div>
             </div>
         </div>
