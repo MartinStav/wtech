@@ -8,7 +8,7 @@
                     <div class="col-lg-7 col-xl-6 text-start">
                         <h1 class="display-4 fw-bold mb-3 text-accent text-uppercase hero-title">Premium coffee beans</h1>
                         <p class="lead mb-4">Ethically sourced, expertly roasted, delivered fresh</p>
-                        <a href="{{ url('/src/public/shop.php') }}" class="btn btn-accent btn-lg rounded-0 px-4 text-uppercase">Shop now</a>
+                        <a href="{{ route('shop') }}" class="btn btn-accent btn-lg rounded-0 px-4 text-uppercase">Shop now</a>
                     </div>
                 </div>
             </div>
@@ -118,78 +118,32 @@
             <div class="container">
                 <h2 class="mb-5 text-accent text-start text-center">Featured products</h2>
                 <div class="row g-4">
+                    @foreach ($featuredProducts as $product)
+                    @php $thumb = $product->images->first()?->path ?? 'assets/logo.png'; @endphp
                     <div class="col-6 col-md-6 col-lg-4">
-                        <a href="{{ url('/src/public/product.php') }}" class="card border-0 h-100 d-flex flex-column text-decoration-none">
-                            <div class="ratio ratio-1x1 mb-2"><img src="{{ asset('assets/brazilian.png') }}" alt="Brazilian Santos" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
-                            <h3 class="h6 fw-bold mb-1">Brazilian Santos</h3>
-                            <p class="small text-secondary mb-2">Single Origin</p>
-                            <p class="small mb-1">Origin: Brazil</p>
-                            <p class="small mb-1">Roast: Medium</p>
-                            <p class="small mb-2">Weight: 250g</p>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="fw-bold">15,99 €</span>
-                                <button type="button" class="btn btn-dark btn-sm rounded-0 small" onclick="event.preventDefault(); event.stopPropagation();">Add to Cart</button>
-                            </div>
-                        </a>
+                        <div class="card border-0 h-100 d-flex flex-column bg-transparent">
+                            <a href="{{ route('product.show', ['id' => $product->id]) }}" class="text-decoration-none text-dark flex-grow-1 d-flex flex-column">
+                                <div class="ratio ratio-1x1 mb-2"><img src="{{ asset($thumb) }}" alt="{{ $product->name }}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
+                                <h3 class="h6 fw-bold mb-1">{{ $product->name }}</h3>
+                                <p class="small text-secondary mb-2">{{ $product->category->name }}</p>
+                                <p class="small mb-1">Origin: {{ $product->origin_label ?? '—' }}</p>
+                                <p class="small mb-1">Roast: {{ ucfirst($product->roast_level) }}</p>
+                                <p class="small mb-2">Weight: {{ $product->weight_grams }}g</p>
+                                <div class="d-flex justify-content-between align-items-center mt-auto mb-2">
+                                    <span class="fw-bold">{{ number_format((float) $product->price, 2, ',', ' ') }} €</span>
+                                </div>
+                            </a>
+                            <form method="post" action="{{ route('cart.add') }}" class="mt-auto">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-dark btn-sm rounded-0 small w-100">Add to Cart</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-6 col-md-6 col-lg-4">
-                        <a href="{{ url('/src/public/product.php') }}" class="card border-0 h-100 d-flex flex-column text-decoration-none">
-                            <div class="ratio ratio-1x1 mb-2"><img src="{{ asset('assets/columbian_supremo.png') }}" alt="Colombian Supremo" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
-                            <h3 class="h6 fw-bold mb-1">Colombian Supremo</h3>
-                            <p class="small text-secondary mb-2">Single Origin</p>
-                            <p class="small mb-1">Origin: Colombia</p>
-                            <p class="small mb-1">Roast: Medium</p>
-                            <p class="small mb-2">Weight: 250g</p>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="fw-bold">16,99 €</span>
-                                <button type="button" class="btn btn-dark btn-sm rounded-0 small" onclick="event.preventDefault(); event.stopPropagation();">Add to Cart</button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-6 col-lg-4">
-                        <a href="{{ url('/src/public/product.php') }}" class="card border-0 h-100 d-flex flex-column text-decoration-none">
-                            <div class="ratio ratio-1x1 mb-2"><img src="{{ asset('assets/ethiopian_1.png') }}" alt="Ethiopian Yirgacheffe" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
-                            <h3 class="h6 fw-bold mb-1">Ethiopian Yirgacheffe</h3>
-                            <p class="small text-secondary mb-2">Single Origin</p>
-                            <p class="small mb-1">Origin: Ethiopia</p>
-                            <p class="small mb-1">Roast: Light</p>
-                            <p class="small mb-2">Weight: 250g</p>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="fw-bold">18,99 €</span>
-                                <button type="button" class="btn btn-dark btn-sm rounded-0 small" onclick="event.preventDefault(); event.stopPropagation();">Add to Cart</button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-6 col-lg-4">
-                        <a href="{{ url('/src/public/product.php') }}" class="card border-0 h-100 d-flex flex-column text-decoration-none">
-                            <div class="ratio ratio-1x1 mb-2"><img src="{{ asset('assets/costarica.png') }}" alt="Costa Rican Tarrazu" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
-                            <h3 class="h6 fw-bold mb-1">Costa Rican Tarrazu</h3>
-                            <p class="small text-secondary mb-2">Single Origin</p>
-                            <p class="small mb-1">Origin: Costa Rica</p>
-                            <p class="small mb-1">Roast: Medium</p>
-                            <p class="small mb-2">Weight: 250g</p>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="fw-bold">18,99 €</span>
-                                <button type="button" class="btn btn-dark btn-sm rounded-0 small" onclick="event.preventDefault(); event.stopPropagation();">Add to Cart</button>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-md-6 col-lg-4">
-                        <a href="{{ url('/src/public/product.php') }}" class="card border-0 h-100 d-flex flex-column text-decoration-none">
-                            <div class="ratio ratio-1x1 mb-2"><img src="{{ asset('assets/decaf.png') }}" alt="Decaf Colombia" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
-                            <h3 class="h6 fw-bold mb-1">Decaf Colombia</h3>
-                            <p class="small text-secondary mb-2">Decaf</p>
-                            <p class="small mb-1">Origin: Colombia</p>
-                            <p class="small mb-1">Roast: Medium</p>
-                            <p class="small mb-2">Weight: 250g</p>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="fw-bold">17,99 €</span>
-                                <button type="button" class="btn btn-dark btn-sm rounded-0 small" onclick="event.preventDefault(); event.stopPropagation();">Add to Cart</button>
-                            </div>
-                        </a>
-                    </div>
+                    @endforeach
                     <div class="col-6 col-md-6 col-lg-4 d-flex align-items-center justify-content-center py-md-5">
-                        <a href="{{ url('/src/public/shop.php') }}" class="text-decoration-none text-accent text-center">
+                        <a href="{{ route('shop') }}" class="text-decoration-none text-accent text-center">
                             <div class="fs-2 lh-1 mb-3">→</div>
                             <span class="d-block text-uppercase small fw-bold">View all products</span>
                         </a>

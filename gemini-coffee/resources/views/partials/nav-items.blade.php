@@ -2,10 +2,10 @@
     <a class="nav-link" href="{{ url('/home.php') }}">Home</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url('/src/public/shop.php') }}">Shop</a>
+    <a class="nav-link" href="{{ route('shop') }}">Shop</a>
 </li>
 <li class="nav-item">
-    <a class="nav-link" href="{{ url('/src/order/basket.php') }}">Cart</a>
+    <a class="nav-link" href="{{ route('cart.index') }}">Cart</a>
 </li>
 @guest
     <li class="nav-item">

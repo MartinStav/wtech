@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home');
-Route::view('/home.php', 'home');
+Route::get('/', HomeController::class);
+Route::get('/home.php', HomeController::class);
 
-Route::view('/src/public/shop.php', 'src.public.shop');
-Route::view('/src/public/product.php', 'src.public.product');
+Route::get('/src/public/shop.php', [ShopController::class, 'index'])->name('shop');
+Route::get('/src/public/product.php', [ShopController::class, 'show'])->name('product.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/src/auth/login.php', [AuthController::class, 'showLoginForm'])->name('login');
@@ -18,8 +21,13 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::view('/src/order/basket.php', 'src.order.basket');
-Route::view('/src/order/basket-empty.php', 'src.order.basket-empty');
+Route::get('/src/order/basket.php', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+Route::get('/src/order/basket-empty.php', fn () => redirect()->route('cart.index'));
+
 Route::view('/src/order/shipping.php', 'src.order.shipping');
 Route::view('/src/order/payment.php', 'src.order.payment');
 Route::view('/src/order/review.php', 'src.order.review');
