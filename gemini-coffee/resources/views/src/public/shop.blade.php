@@ -5,7 +5,7 @@
     $qBase = request()->except(['q', 'page']);
     $shopQuery = fn (array $merge = []) => route('shop', array_merge(request()->except('page'), $merge));
 @endphp
-<main class="container py-5">
+<main class="container py-5" data-shop-scroll-root data-shop-path="{{ parse_url(url('/src/public/shop.php'), PHP_URL_PATH) }}">
         <section class="mb-5">
             <h1 class="h2 fw-bold mb-2">All products</h1>
             <p class="text-secondary mb-0">Browse our complete coffee collection.</p>
@@ -65,7 +65,7 @@
                         <input type="hidden" name="{{ $name }}" value="{{ $value }}">
                     @endforeach
                     <span class="small">Sort by:</span>
-                    <select name="sort" class="form-select form-select-sm rounded-0" style="width: auto;" onchange="this.form.submit()">
+                    <select name="sort" class="form-select form-select-sm rounded-0" style="width: auto;" onchange="this.form.requestSubmit()">
                         <option value="price_asc" @selected(request('sort', 'price_asc') === 'price_asc')>Price: Low to High</option>
                         <option value="price_desc" @selected(request('sort') === 'price_desc')>Price: High to Low</option>
                         <option value="name" @selected(request('sort') === 'name')>Name A-Z</option>
@@ -116,4 +116,53 @@
             {{ $products->withQueryString()->links('vendor.pagination.bootstrap-5') }}
         </section>
     </main>
+@push('scripts')
+<script>
+(function () {
+  var key = 'gemini_shop_scroll_y';
+  var main = document.querySelector('main[data-shop-scroll-root]');
+  if (!main) return;
+  var shopPath = main.getAttribute('data-shop-path');
+  if (!shopPath) return;
+  function isShopHref(href) {
+    if (!href) return false;
+    try {
+      var u = new URL(href, window.location.origin);
+      return u.pathname === shopPath;
+    } catch (e) {
+      return false;
+    }
+  }
+  main.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a || !isShopHref(a.getAttribute('href'))) return;
+    sessionStorage.setItem(key, String(window.scrollY));
+  }, true);
+  main.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f || f.tagName !== 'FORM' || String(f.method).toLowerCase() !== 'get') return;
+    if (!isShopHref(f.getAttribute('action'))) return;
+    sessionStorage.setItem(key, String(window.scrollY));
+  }, true);
+  function restoreScroll() {
+    var raw = sessionStorage.getItem(key);
+    if (raw === null) return;
+    sessionStorage.removeItem(key);
+    var y = parseInt(raw, 10);
+    if (Number.isNaN(y)) return;
+    window.scrollTo(0, y);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        window.scrollTo(0, y);
+      });
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', restoreScroll);
+  } else {
+    restoreScroll();
+  }
+})();
+</script>
+@endpush
 @endsection
