@@ -58,6 +58,20 @@ class ShopController extends Controller
             }
         }
 
+        $priceMinRaw = $request->query('price_min');
+        $priceMaxRaw = $request->query('price_max');
+        $priceMin = is_numeric($priceMinRaw) ? max(0.0, round((float) $priceMinRaw, 2)) : null;
+        $priceMax = is_numeric($priceMaxRaw) ? max(0.0, round((float) $priceMaxRaw, 2)) : null;
+        if ($priceMin !== null && $priceMax !== null && $priceMin > $priceMax) {
+            [$priceMin, $priceMax] = [$priceMax, $priceMin];
+        }
+        if ($priceMin !== null) {
+            $query->where('price', '>=', $priceMin);
+        }
+        if ($priceMax !== null) {
+            $query->where('price', '<=', $priceMax);
+        }
+
         $sort = (string) $request->query('sort', 'price_asc');
         match ($sort) {
             'price_desc' => $query->orderByDesc('price')->orderBy('name'),

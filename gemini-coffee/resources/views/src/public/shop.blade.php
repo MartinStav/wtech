@@ -58,14 +58,19 @@
         </section>
 
         <section>
-            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
                 <span class="text-secondary">{{ $products->total() }} {{ $products->total() === 1 ? 'product' : 'products' }}</span>
-                <form method="get" action="{{ route('shop') }}" class="d-flex align-items-center gap-2">
-                    @foreach (request()->except(['sort', 'page']) as $name => $value)
+                <form method="get" action="{{ route('shop') }}" class="d-flex flex-wrap align-items-center gap-2">
+                    @foreach (request()->except(['sort', 'page', 'price_min', 'price_max']) as $name => $value)
                         <input type="hidden" name="{{ $name }}" value="{{ $value }}">
                     @endforeach
-                    <span class="small">Sort by:</span>
-                    <select name="sort" class="form-select form-select-sm rounded-0" style="width: auto;" onchange="this.form.requestSubmit()">
+                    <span class="small text-nowrap">Price (€):</span>
+                    <input type="number" name="price_min" value="{{ request('price_min') }}" class="form-control form-control-sm rounded-0" style="width: 5.5rem;" min="0" step="0.01" inputmode="decimal" placeholder="From" aria-label="Minimum price">
+                    <span class="small text-secondary">–</span>
+                    <input type="number" name="price_max" value="{{ request('price_max') }}" class="form-control form-control-sm rounded-0" style="width: 5.5rem;" min="0" step="0.01" inputmode="decimal" placeholder="To" aria-label="Maximum price">
+                    <button type="submit" class="btn btn-outline-dark btn-sm rounded-0">Apply</button>
+                    <span class="small text-nowrap ms-1">Sort by:</span>
+                    <select name="sort" class="form-select form-select-sm rounded-0" style="width: auto; min-width: 11rem;" onchange="this.form.requestSubmit()">
                         <option value="price_asc" @selected(request('sort', 'price_asc') === 'price_asc')>Price: Low to High</option>
                         <option value="price_desc" @selected(request('sort') === 'price_desc')>Price: High to Low</option>
                         <option value="name" @selected(request('sort') === 'name')>Name A-Z</option>
