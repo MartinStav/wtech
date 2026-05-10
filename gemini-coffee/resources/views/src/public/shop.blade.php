@@ -90,10 +90,31 @@
                     @php
                         $thumb = $product->images->first()?->path ?? 'assets/logo.png';
                     @endphp
+                    @php $faved = in_array($product->id, $favoriteIds); @endphp
                     <div class="col-6 col-md-6 col-lg-4">
                         <div class="card border-0 h-100 d-flex flex-column bg-transparent">
+                            <div class="position-relative">
+                                <a href="{{ route('product.show', ['id' => $product->id]) }}" class="d-block">
+                                    <div class="ratio ratio-1x1 mb-2"><img src="{{ asset($thumb) }}" alt="{{ $product->name }}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
+                                </a>
+                                @auth
+                                    <form method="post" action="{{ route('favorites.toggle') }}" class="position-absolute top-0 end-0 m-1">
+                                        @csrf
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <button type="submit" class="btn btn-sm rounded-0 border-0 p-1 lh-1"
+                                                style="background:rgba(255,255,255,0.85);"
+                                                title="{{ $faved ? 'Remove from favorites' : 'Add to favorites' }}">
+                                            <span style="font-size:1.2rem;color:{{ $faved ? '#dc3545' : '#aaa' }};">{{ $faved ? '♥' : '♡' }}</span>
+                                        </button>
+                                    </form>
+                                @else
+                                    <a href="{{ route('login') }}" class="position-absolute top-0 end-0 m-1 btn btn-sm rounded-0 border-0 p-1 lh-1"
+                                       style="background:rgba(255,255,255,0.85);" title="Login to save favorites">
+                                        <span style="font-size:1.2rem;color:#aaa;">♡</span>
+                                    </a>
+                                @endauth
+                            </div>
                             <a href="{{ route('product.show', ['id' => $product->id]) }}" class="text-decoration-none text-dark flex-grow-1 d-flex flex-column">
-                                <div class="ratio ratio-1x1 mb-2"><img src="{{ asset($thumb) }}" alt="{{ $product->name }}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
                                 <h3 class="h6 fw-bold mb-1">{{ $product->name }}</h3>
                                 <p class="small text-secondary mb-2">{{ $product->category->name }}</p>
                                 <p class="small mb-1">Origin: {{ $product->origin_label ?? '—' }}</p>

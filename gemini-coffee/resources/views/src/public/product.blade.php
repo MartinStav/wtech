@@ -67,6 +67,18 @@
                         <button type="submit" name="checkout" value="1" class="btn btn-outline-dark rounded-0">Buy Now</button>
                     </div>
                 </form>
+                @auth
+                    <form method="post" action="{{ route('favorites.toggle') }}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <button type="submit" class="btn btn-outline-dark rounded-0 w-100">
+                            <span style="color:{{ $isFavorited ? '#dc3545' : 'inherit' }};">{{ $isFavorited ? '♥' : '♡' }}</span>
+                            {{ $isFavorited ? 'Remove from favorites' : 'Add to favorites' }}
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-outline-dark rounded-0 w-100">♡ Add to favorites</a>
+                @endauth
             </div>
         </div>
     </main>

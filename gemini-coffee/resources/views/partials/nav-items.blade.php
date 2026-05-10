@@ -18,7 +18,7 @@
         </li>
     @else
         <li class="nav-item">
-            <span class="nav-link text-accent mb-0">{{ auth()->user()->name }}</span>
+            <a class="nav-link text-accent" href="{{ route('profile') }}">{{ auth()->user()->name }}</a>
         </li>
     @endif
     <li class="nav-item">

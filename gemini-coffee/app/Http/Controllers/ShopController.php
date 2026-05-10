@@ -81,8 +81,13 @@ class ShopController extends Controller
 
         $products = $query->paginate($perPage)->withQueryString();
 
+        $favoriteIds = auth()->check()
+            ? auth()->user()->favoriteProducts()->pluck('products.id')->toArray()
+            : [];
+
         return view('src.public.shop', [
-            'products' => $products,
+            'products'    => $products,
+            'favoriteIds' => $favoriteIds,
         ]);
     }
 
@@ -94,8 +99,12 @@ class ShopController extends Controller
             ->active()
             ->findOrFail($id);
 
+        $isFavorited = auth()->check()
+            && auth()->user()->favoriteProducts()->where('products.id', $product->id)->exists();
+
         return view('src.public.product', [
-            'product' => $product,
+            'product'     => $product,
+            'isFavorited' => $isFavorited,
         ]);
     }
 }

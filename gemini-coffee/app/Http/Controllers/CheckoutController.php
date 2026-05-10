@@ -126,12 +126,12 @@ class CheckoutController extends Controller
         $request->merge(['card_number' => $digits]);
 
         $validated = $request->validate([
-            'card_number' => ['required', 'digits_between:13,19'],
+            'card_number' => ['required', 'digits:16'],
             'cardholder' => 'required|string|max:120',
             'expiry' => ['required', 'regex:/^(0[1-9]|1[0-2])\/\d{2}$/'],
             'cvv' => ['required', 'digits:3'],
         ], [
-            'card_number.digits_between' => 'The card number must contain 13 to 19 digits.',
+            'card_number.digits' => 'The card number must contain exactly 16 digits.',
             'expiry.regex' => 'The expiry must be in MM/YY format.',
         ]);
 

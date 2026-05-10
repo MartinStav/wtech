@@ -27,7 +27,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="cardNumber" class="form-label small fw-bold text-uppercase">Card number *</label>
-                        <input type="text" class="form-control rounded-0 @error('card_number') is-invalid @enderror" id="cardNumber" name="card_number" value="{{ $val('card_number') }}" placeholder="0000000000000000" required inputmode="numeric" autocomplete="cc-number" maxlength="19" data-digits-only data-max-digits="19" title="Digits only, 13–19 digits">
+                        <input type="text" class="form-control rounded-0 @error('card_number') is-invalid @enderror" id="cardNumber" name="card_number" value="{{ $val('card_number') }}" placeholder="0000000000000000" required inputmode="numeric" autocomplete="cc-number" maxlength="16" data-digits-only data-max-digits="16" title="Digits only, 16 digits" pattern="[0-9]{16}">
                         @error('card_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
