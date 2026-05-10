@@ -1,0 +1,143 @@
+@startuml WTECH_datovy_faza2
+skinparam linetype ortho
+skinparam roundcorner 0
+skinparam classBackgroundColor White
+skinparam classBorderColor Black
+skinparam classHeaderBackgroundColor #E8E8E8
+skinparam ArrowColor Black
+skinparam nodesep 60
+skinparam ranksep 70
+
+entity "categories" {
+  PK  id : SERIAL
+  --
+  name : VARCHAR(120)
+  slug : VARCHAR(64) UNIQUE
+}
+
+entity "products" {
+  PK  id : SERIAL
+  FK  category_id : BIGINT
+  --
+  name : VARCHAR(255)
+  slug : VARCHAR(255) UNIQUE
+  description : TEXT
+  price : DECIMAL(10,2)
+  stock_quantity : INT
+  is_active : BOOLEAN
+  origin_label : VARCHAR(120)
+  roast_level : VARCHAR(20)
+  weight_grams : INT
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+entity "product_images" {
+  PK  id : SERIAL
+  FK  product_id : BIGINT
+  --
+  path : VARCHAR(255)
+  sort_order : INT
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+entity "users" {
+  PK  id : SERIAL
+  --
+  name : VARCHAR(255)
+  email : VARCHAR(255) UNIQUE
+  password : VARCHAR(255)
+  role : VARCHAR(20)
+  email_verified_at : TIMESTAMPTZ
+  remember_token : VARCHAR(100)
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+entity "cart_items" {
+  PK  id : SERIAL
+  FK  user_id : BIGINT NULL
+  FK  product_id : BIGINT
+  --
+  session_id : VARCHAR(255)
+  quantity : INT
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+entity "favorites" {
+  PK  id : SERIAL
+  FK  user_id : BIGINT
+  FK  product_id : BIGINT
+  --
+  UNIQUE (user_id, product_id)
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+entity "addresses" {
+  PK  id : SERIAL
+  FK  user_id : BIGINT
+  --
+  first_name : VARCHAR(100)
+  last_name : VARCHAR(100)
+  email : VARCHAR(255)
+  address_line : VARCHAR(255)
+  city : VARCHAR(100)
+  state : VARCHAR(100)
+  postal_code : VARCHAR(20)
+  is_default : BOOLEAN
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+entity "orders" {
+  PK  id : SERIAL
+  FK  user_id : BIGINT NULL
+  --
+  first_name : VARCHAR(100)
+  last_name : VARCHAR(100)
+  email : VARCHAR(255)
+  address_line : VARCHAR(255)
+  city : VARCHAR(100)
+  state : VARCHAR(100)
+  postal_code : VARCHAR(20)
+  shipping_method : VARCHAR(20)
+  shipping_price : DECIMAL(10,2)
+  subtotal : DECIMAL(10,2)
+  tax : DECIMAL(10,2)
+  total : DECIMAL(10,2)
+  status : VARCHAR(20)
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+entity "order_items" {
+  PK  id : SERIAL
+  FK  order_id : BIGINT
+  FK  product_id : BIGINT NULL
+  --
+  product_name : VARCHAR(255)
+  unit_price : DECIMAL(10,2)
+  quantity : INT
+  line_total : DECIMAL(10,2)
+  created_at : TIMESTAMPTZ
+  updated_at : TIMESTAMPTZ
+}
+
+' ── Vzťahy ─────────────────────────────────────────────────────────────────
+categories      ||--o{ products       : "Obsahuje"
+products        ||--o{ product_images : "Má"
+products        ||--o{ cart_items     : "Je v"
+products        ||--o{ favorites      : "Je obľúbený"
+products        ||--o{ order_items    : "Predáva"
+
+users           ||--o{ cart_items     : "Má"
+users           ||--o{ favorites      : "Má"
+users           ||--o{ addresses      : "Má"
+users           ||--o{ orders         : "Zadal"
+
+orders          ||--|{ order_items    : "Obsahuje"
+
+@enduml

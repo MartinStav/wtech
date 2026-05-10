@@ -82,6 +82,33 @@
     var exp = document.getElementById('expiry');
     if (card) digitsOnly(card, parseInt(card.getAttribute('data-max-digits') || '19', 10));
     if (cvv) digitsOnly(cvv, parseInt(cvv.getAttribute('data-max-digits') || '3', 10));
+    var form = document.getElementById('payment-form');
+    if (form && exp) {
+        form.addEventListener('submit', function (e) {
+            var raw = exp.value.replace(/\D/g, '');
+            if (raw.length === 4) {
+                var mm = parseInt(raw.slice(0, 2), 10);
+                var yy = parseInt(raw.slice(2), 10);
+                var now = new Date();
+                var curYear  = now.getFullYear() % 100;
+                var curMonth = now.getMonth() + 1;
+                if (yy < curYear || (yy === curYear && mm < curMonth)) {
+                    e.preventDefault();
+                    exp.classList.add('is-invalid');
+                    var fb = exp.nextElementSibling;
+                    if (!fb || !fb.classList.contains('invalid-feedback')) {
+                        fb = document.createElement('div');
+                        fb.className = 'invalid-feedback';
+                        exp.parentNode.appendChild(fb);
+                    }
+                    fb.textContent = 'The expiry date must not be in the past.';
+                }
+            }
+        });
+        exp.addEventListener('input', function () {
+            exp.classList.remove('is-invalid');
+        });
+    }
     if (exp) {
         exp.addEventListener('input', function () {
             var raw = exp.value.replace(/\D/g, '').slice(0, 4);

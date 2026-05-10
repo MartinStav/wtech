@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Support\CartContents;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -37,10 +40,25 @@ class CheckoutController extends Controller
 
     public function showShipping(Request $request): View|RedirectResponse
     {
-        $data = array_merge(
-            session(self::SESSION_KEY.'.shipping', []),
-            old() ?: []
-        );
+        $saved = session(self::SESSION_KEY.'.shipping', []);
+        $data = array_merge($saved, old() ?: []);
+
+        $savedAddress = null;
+        if (auth()->check() && empty($saved)) {
+            $savedAddress = auth()->user()->addresses()->where('is_default', true)->first()
+                ?? auth()->user()->addresses()->latest()->first();
+            if ($savedAddress && empty($data)) {
+                $data = [
+                    'first_name' => $savedAddress->first_name,
+                    'last_name'  => $savedAddress->last_name,
+                    'email'      => $savedAddress->email,
+                    'address'    => $savedAddress->address_line,
+                    'city'       => $savedAddress->city,
+                    'state'      => $savedAddress->state,
+                    'zip'        => $savedAddress->postal_code,
+                ];
+            }
+        }
 
         $shippingMethod = $data['shipping_method'] ?? 'standard';
         $summary = $this->orderSummary($request, $shippingMethod);
@@ -49,7 +67,8 @@ class CheckoutController extends Controller
         }
 
         return view('src.order.shipping', [
-            'shipping' => $data,
+            'shipping'     => $data,
+            'savedAddress' => $savedAddress,
             ...$summary,
         ]);
     }
@@ -80,6 +99,22 @@ class CheckoutController extends Controller
             'email.regex' => 'The email must include a domain with an extension (for example .com or .sk).',
             'zip.regex' => 'The zip code may only contain digits.',
         ]);
+
+        if (auth()->check() && $request->boolean('save_address')) {
+            $user = auth()->user();
+            $hasDefault = $user->addresses()->where('is_default', true)->exists();
+
+            $user->addresses()->create([
+                'first_name'   => $validated['first_name'],
+                'last_name'    => $validated['last_name'],
+                'email'        => $validated['email'],
+                'address_line' => $validated['address'],
+                'city'         => $validated['city'],
+                'state'        => $validated['state'],
+                'postal_code'  => $validated['zip'],
+                'is_default'   => ! $hasDefault,
+            ]);
+        }
 
         $request->session()->put(self::SESSION_KEY.'.shipping', $validated);
 
@@ -128,7 +163,20 @@ class CheckoutController extends Controller
         $validated = $request->validate([
             'card_number' => ['required', 'digits:16'],
             'cardholder' => 'required|string|max:120',
-            'expiry' => ['required', 'regex:/^(0[1-9]|1[0-2])\/\d{2}$/'],
+            'expiry' => [
+                'required',
+                'regex:/^(0[1-9]|1[0-2])\/\d{2}$/',
+                function ($attribute, $value, $fail) {
+                    if (preg_match('/^(0[1-9]|1[0-2])\/(\d{2})$/', $value, $m)) {
+                        $cardYear  = 2000 + (int) $m[2];
+                        $cardMonth = (int) $m[1];
+                        $now = now();
+                        if ($cardYear < $now->year || ($cardYear === $now->year && $cardMonth < $now->month)) {
+                            $fail('The expiry date must not be in the past.');
+                        }
+                    }
+                },
+            ],
             'cvv' => ['required', 'digits:3'],
         ], [
             'card_number.digits' => 'The card number must contain exactly 16 digits.',
@@ -170,12 +218,46 @@ class CheckoutController extends Controller
                 ->with('checkout_error', 'Your checkout session expired. Please start again.');
         }
 
-        if (CartContents::rowsAndSubtotal($request)['cartRows']->isEmpty()) {
+        $built = CartContents::rowsAndSubtotal($request);
+
+        if ($built['cartRows']->isEmpty()) {
             $request->session()->forget(self::SESSION_KEY);
 
             return redirect()
                 ->route('cart.index')
                 ->with('checkout_error', 'Your cart is empty.');
+        }
+
+        $shipping = $request->session()->get(self::SESSION_KEY.'.shipping');
+        $shippingFee = CartContents::shippingEuros($shipping['shipping_method']);
+        $taxTotal = CartContents::taxAndTotal($built['subtotal'], $shippingFee);
+
+        $order = Order::create([
+            'user_id'        => auth()->id(),
+            'first_name'     => $shipping['first_name'],
+            'last_name'      => $shipping['last_name'],
+            'email'          => $shipping['email'],
+            'address_line'   => $shipping['address'],
+            'city'           => $shipping['city'],
+            'state'          => $shipping['state'],
+            'postal_code'    => $shipping['zip'],
+            'shipping_method' => $shipping['shipping_method'],
+            'shipping_price' => $shippingFee,
+            'subtotal'       => $built['subtotal'],
+            'tax'            => $taxTotal['tax'],
+            'total'          => $taxTotal['total'],
+            'status'         => 'placed',
+        ]);
+
+        foreach ($built['cartRows'] as $row) {
+            OrderItem::create([
+                'order_id'     => $order->id,
+                'product_id'   => $row->product->id,
+                'product_name' => $row->product->name,
+                'unit_price'   => $row->product->price,
+                'quantity'     => $row->quantity,
+                'line_total'   => $row->line_total,
+            ]);
         }
 
         CartContents::clearAll($request);

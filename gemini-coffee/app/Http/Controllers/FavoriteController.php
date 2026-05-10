@@ -39,6 +39,8 @@ class FavoriteController extends Controller
             ->latest('favorites.created_at')
             ->get();
 
-        return view('src.profile', compact('user', 'favorites'));
+        $orders = $user->orders()->with('items')->get();
+
+        return view('src.profile', compact('user', 'favorites', 'orders'));
     }
 }

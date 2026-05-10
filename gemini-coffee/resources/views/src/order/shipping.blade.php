@@ -86,6 +86,12 @@
                             @error('zip')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
+                    @auth
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="saveAddress" name="save_address" value="1">
+                        <label class="form-check-label small" for="saveAddress">Save this address to my profile</label>
+                    </div>
+                    @endauth
                     <button type="submit" class="btn btn-dark w-100 rounded-0 py-2">Continue</button>
                 </form>
             </div>
