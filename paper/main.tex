@@ -65,7 +65,7 @@ Pracujeme s~databázovým systémom \textbf{PostgreSQL}. Databáza obsahuje dev�
 
 \subsection{Fyzický dátový model}
 
-Fyzický model je uvedený nižšie (obrázok bude doplnený). Tabuľky a~ich vzťahy:
+Fyzický model databázy je znázornený na obrázku~\ref{fig:fyzicky_model}. Tabuľky a~ich vzťahy:
 
 \begin{itemize}
   \item \textbf{users} -- zákazníci a~administrátori; rozlíšenie roľou \texttt{role} (\texttt{customer}/\texttt{admin}).
@@ -79,12 +79,12 @@ Fyzický model je uvedený nižšie (obrázok bude doplnený). Tabuľky a~ich vz
   \item \textbf{order\_items} -- položky objednávky; cudzí kľúč na \texttt{orders} (cascade) a~\texttt{products} (nullable); snapshot \texttt{product\_name} a~\texttt{unit\_price} v~čase objednávky, \texttt{quantity}, \texttt{line\_total}.
 \end{itemize}
 
-% sem vloží obrázok fyzického modelu
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=\linewidth, height=0.85\textheight, keepaspectratio]{figures/fyzicky_model.png}
-%   \caption{Fyzický dátový model}
-% \end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth, height=0.85\textheight, keepaspectratio]{figures/fyzicky_model.png}
+  \caption{Fyzický dátový model databázy}
+  \label{fig:fyzicky_model}
+\end{figure}
 
 \subsection{Zmeny v~dátovom modeli oproti fáze~1}
 
