@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
@@ -37,7 +38,10 @@ Route::get('/src/order/review.php', [CheckoutController::class, 'showReview']);
 Route::post('/src/order/complete.php', [CheckoutController::class, 'completeOrder'])->name('checkout.complete');
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::view('/src/admin/dashboard.php', 'src.admin.dashboard');
-    Route::view('/src/admin/product-add.php', 'src.admin.product-add');
-    Route::view('/src/admin/product-edit.php', 'src.admin.product-edit');
+    Route::get('/src/admin/dashboard.php', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/src/admin/product-add.php', [AdminController::class, 'create'])->name('admin.product.create');
+    Route::post('/src/admin/product-add.php', [AdminController::class, 'store'])->name('admin.product.store');
+    Route::get('/src/admin/product-edit.php', [AdminController::class, 'edit'])->name('admin.product.edit');
+    Route::post('/src/admin/product-edit.php', [AdminController::class, 'update'])->name('admin.product.update');
+    Route::post('/src/admin/product-delete.php', [AdminController::class, 'destroy'])->name('admin.product.destroy');
 });
