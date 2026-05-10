@@ -1,7 +1,7 @@
 # Gemini Coffee – E-shop
 
 Semestrálny projekt WTECH 2025/2026 – Fáza 2  
-**Autori:** Jakub Kelemen, Tomáš Stavrovsky
+**Autori:** Jakub Kelemen, Martin Stavrovsky
 
 ---
 
