@@ -53,32 +53,42 @@
                 <div class="small fw-bold text-uppercase mb-2">Description</div>
                 <p class="mb-4">{{ $product->description }}</p>
 
-                <form method="post" action="{{ route('cart.add') }}" class="mb-4">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <div class="small fw-bold text-uppercase mb-2">Quantity</div>
-                    <div class="d-flex align-items-center gap-2 mb-4">
-                        <button type="button" class="btn btn-outline-dark rounded-0" id="qty-minus">−</button>
-                        <input type="number" name="quantity" id="product-qty" class="form-control rounded-0 text-center" value="1" min="1" max="{{ min(999, $product->stock_quantity) }}" style="max-width: 80px;">
-                        <button type="button" class="btn btn-outline-dark rounded-0" id="qty-plus">+</button>
-                    </div>
-                    <div class="d-flex flex-wrap gap-2">
-                        <button type="submit" class="btn btn-dark rounded-0">Add to Cart</button>
-                        <button type="submit" name="checkout" value="1" class="btn btn-outline-dark rounded-0">Buy Now</button>
-                    </div>
-                </form>
-                @auth
-                    <form method="post" action="{{ route('favorites.toggle') }}">
+                <div class="small fw-bold text-uppercase mb-2">Quantity</div>
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <button type="button" class="btn btn-outline-dark rounded-0" id="qty-minus">−</button>
+                    <input type="number" id="product-qty" class="form-control rounded-0 text-center" value="1" min="1" max="{{ min(999, $product->stock_quantity) }}" style="max-width: 80px;">
+                    <button type="button" class="btn btn-outline-dark rounded-0" id="qty-plus">+</button>
+                </div>
+                <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
+                    <form method="post" action="{{ route('cart.add') }}" class="m-0">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button type="submit" class="btn btn-outline-dark rounded-0 w-100">
-                            <span style="color:{{ $isFavorited ? '#dc3545' : 'inherit' }};">{{ $isFavorited ? '♥' : '♡' }}</span>
-                            {{ $isFavorited ? 'Remove from favorites' : 'Add to favorites' }}
-                        </button>
+                        <input type="hidden" name="quantity" value="1" id="cart-qty-hidden">
+                        <button type="submit" class="btn btn-dark rounded-0">Add to Cart</button>
                     </form>
-                @else
-                    <a href="{{ route('login') }}" class="btn btn-outline-dark rounded-0 w-100">♡ Add to favorites</a>
-                @endauth
+                    <form method="post" action="{{ route('cart.add') }}" class="m-0">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <input type="hidden" name="quantity" value="1" id="buy-qty-hidden">
+                        <input type="hidden" name="checkout" value="1">
+                        <button type="submit" class="btn btn-outline-dark rounded-0">Buy Now</button>
+                    </form>
+                    @auth
+                        <form method="post" action="{{ route('favorites.toggle') }}" class="m-0">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <button type="submit" class="border-0 bg-transparent p-0 lh-1"
+                                    title="{{ $isFavorited ? 'Remove from favorites' : 'Add to favorites' }}">
+                                <span style="font-size:2rem;color:{{ $isFavorited ? '#dc3545' : '#bbb' }};transition:color .2s;">{{ $isFavorited ? '♥' : '♡' }}</span>
+                            </button>
+                        </form>
+                    @else
+                        <a href="{{ route('login') }}" class="border-0 bg-transparent p-0 lh-1 d-inline-block text-decoration-none"
+                           title="Login to save favorites">
+                            <span style="font-size:2rem;color:#bbb;">♡</span>
+                        </a>
+                    @endauth
+                </div>
             </div>
         </div>
     </main>
@@ -86,14 +96,23 @@
 <script>
 (() => {
   const input = document.getElementById('product-qty');
+  const cartHidden = document.getElementById('cart-qty-hidden');
+  const buyHidden = document.getElementById('buy-qty-hidden');
   const max = input ? parseInt(input.getAttribute('max'), 10) || 999 : 999;
+  function syncHidden() {
+    if (cartHidden) cartHidden.value = input.value;
+    if (buyHidden) buyHidden.value = input.value;
+  }
+  input?.addEventListener('change', syncHidden);
   document.getElementById('qty-minus')?.addEventListener('click', () => {
     if (!input) return;
     input.value = String(Math.max(1, (parseInt(input.value, 10) || 1) - 1));
+    syncHidden();
   });
   document.getElementById('qty-plus')?.addEventListener('click', () => {
     if (!input) return;
     input.value = String(Math.min(max, (parseInt(input.value, 10) || 1) + 1));
+    syncHidden();
   });
   document.querySelectorAll('.product-thumb').forEach((btn) => {
     btn.addEventListener('click', () => {

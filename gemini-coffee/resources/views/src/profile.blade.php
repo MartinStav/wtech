@@ -38,10 +38,9 @@
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <button type="submit"
-                                            class="btn btn-sm rounded-0 border-0 p-1 lh-1"
-                                            style="background:rgba(255,255,255,0.85);"
+                                            class="border-0 bg-transparent p-0 lh-1 d-block"
                                             title="Remove from favorites">
-                                        <span style="font-size:1.2rem;color:#dc3545;">♥</span>
+                                        <span style="font-size:1.5rem;color:#dc3545;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.55));">♥</span>
                                     </button>
                                 </form>
                             </div>

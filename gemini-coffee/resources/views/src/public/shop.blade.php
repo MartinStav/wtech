@@ -98,19 +98,18 @@
                                     <div class="ratio ratio-1x1 mb-2"><img src="{{ asset($thumb) }}" alt="{{ $product->name }}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover"></div>
                                 </a>
                                 @auth
-                                    <form method="post" action="{{ route('favorites.toggle') }}" class="position-absolute top-0 end-0 m-1">
+                                    <form method="post" action="{{ route('favorites.toggle') }}" class="position-absolute top-0 end-0 m-2">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <button type="submit" class="btn btn-sm rounded-0 border-0 p-1 lh-1"
-                                                style="background:rgba(255,255,255,0.85);"
+                                        <button type="submit" class="border-0 bg-transparent p-0 lh-1 d-block"
                                                 title="{{ $faved ? 'Remove from favorites' : 'Add to favorites' }}">
-                                            <span style="font-size:1.2rem;color:{{ $faved ? '#dc3545' : '#aaa' }};">{{ $faved ? '♥' : '♡' }}</span>
+                                            <span style="font-size:1.5rem;color:{{ $faved ? '#dc3545' : '#fff' }};filter:drop-shadow(0 1px 2px rgba(0,0,0,0.55));">{{ $faved ? '♥' : '♡' }}</span>
                                         </button>
                                     </form>
                                 @else
-                                    <a href="{{ route('login') }}" class="position-absolute top-0 end-0 m-1 btn btn-sm rounded-0 border-0 p-1 lh-1"
-                                       style="background:rgba(255,255,255,0.85);" title="Login to save favorites">
-                                        <span style="font-size:1.2rem;color:#aaa;">♡</span>
+                                    <a href="{{ route('login') }}" class="position-absolute top-0 end-0 m-2 border-0 bg-transparent p-0 lh-1 d-block"
+                                       title="Login to save favorites">
+                                        <span style="font-size:1.5rem;color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.55));">♡</span>
                                     </a>
                                 @endauth
                             </div>
